@@ -1,0 +1,7 @@
+{
+  "img_root": "data/processed_img",
+  "label_path": "test/inner/labels.csv",
+  "class_count": 2,
+  "test_size": 0.2,
+  "epochs": 100
+}
