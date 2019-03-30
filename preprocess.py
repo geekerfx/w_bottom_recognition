@@ -49,7 +49,7 @@ def generate_tags(tag_src_path, ufilter=None):
 
 
 def main():
-    conf2 = json.load(open('conf/paint_preprocess.json', 'r', encoding='UTF-8'))['preprocess']
+    conf2 = json.load(open('conf/preprocess.json', 'r', encoding='UTF-8'))['preprocess']
     # src_path = conf2['src_path']
     # out_path = conf2['out_path']
     # size = conf2['size']
