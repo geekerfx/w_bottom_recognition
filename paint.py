@@ -93,7 +93,7 @@ def paint(csv_path, conf, idx, label):
     df.rename(columns={'Unnamed: 0': 'date'}, inplace=True)
     channel_num = conf["channel_num"]  # 一共几个子图
     channels = conf["channels"]  # 每个子图中包含的指标
-    fig, axs = plt.subplots(nrows=channel_num, ncols=1, figsize=(5, 5))
+    fig, axs = plt.subplots(nrows=channel_num, ncols=1, figsize=(4, 4))
     fig.subplots_adjust(top=1, bottom=0.05, right=1, left=0.05, hspace=0.01)
     for c_idx, channel in enumerate(channels):  # 对每一个子图进行绘制
         for indicator_name in channel:  # 向子图中添加指标曲线
@@ -108,7 +108,7 @@ def paint(csv_path, conf, idx, label):
 
 def main():
     conf = json.load(open("conf/paint.json"))
-    # paint("data/csvfiles/1_000001.XSHE2010-11-24.csv", conf, 0, 0)
+    # paint("data/csvfiles/1_000001.XSHE2010-11-24.csv", conf, 0, 0)  # for test
     csv_path = conf["csv_path"]
     print("Start to paint...")
     for idx, csv_name in enumerate(os.listdir(csv_path)):
