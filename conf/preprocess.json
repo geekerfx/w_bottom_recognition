@@ -1,0 +1,10 @@
+{
+  "preprocess": {
+    "description": "图片后序处理相关配置",
+    "src_path": "data/img",
+    "out_path": "data/processed_img",
+    "size": [224, 224],
+    "tag_src_path": "data/processed_img",
+    "tag_out_path": "data/"
+  }
+}
