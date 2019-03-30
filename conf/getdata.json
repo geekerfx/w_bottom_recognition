@@ -1,9 +1,7 @@
 {
-  "description": "下载数据相关的配置文件",
-  "username": "18821619582",
-  "password": "zxc2527008",
+  "username": "username",
+  "password": "password",
   "out_path": "data/csvfies",
-  "out_path_description": "下载好的文件的输出路径",
   "src": "data/allsample.txt",
   "src_description": "src文件包含需要下载的股票数据相关信息，结构为[str: stock_code, int: count, str: end_date, int: label]"
 }
