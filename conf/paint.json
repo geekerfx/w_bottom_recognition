@@ -1,0 +1,6 @@
+{
+  "csv_path": "data/csvfiles",
+  "channel_num": 3,
+  "channels": [["k", "ma5"], ["volume"], ["macd", "dea", "diff"]],
+  "out_path": "data/img"
+}
