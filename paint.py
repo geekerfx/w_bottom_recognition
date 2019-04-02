@@ -7,6 +7,7 @@ import numpy as np
 
 
 def get_EMA(df, N):
+    """计算ema及相关指标"""
     for i in range(len(df)):
         if i == 0:
             df.ix[i, 'ema'] = df.ix[i, 'close']
@@ -17,6 +18,7 @@ def get_EMA(df, N):
 
 
 def get_MACD(df, short=12, long=26, M=9):
+    """计算macd及相关指标"""
     a = get_EMA(df, short)
     b = get_EMA(df, long)
     df['diff'] = np.array(a) - np.array(b)
@@ -31,6 +33,7 @@ def get_MACD(df, short=12, long=26, M=9):
 
 
 def ma(n, data):
+    """工具函数，计算n日均线"""
     ma = []
     for i in range(len(data) - 2 - n):
         ma.append(np.mean(data[i:i + n]))
@@ -54,6 +57,7 @@ def add_volume(df, ax):
     """向图中添加成交量，采用柱状图"""
     ax.bar([i for i in range(len(df))], df["volume"], color="b")
 
+
 def add_ma5(df, ax):
     """向图中添加五日均线"""
     close = df['close']
@@ -74,6 +78,7 @@ def add_ema(df, ax):
     df = get_MACD(df)
     ax.plot(df["ema"], linewidth=1)
 
+
 def add_diff(df, ax):
     """添加diff曲线"""
     df = get_MACD(df)
@@ -81,14 +86,25 @@ def add_diff(df, ax):
 
 
 def add_dea(df, ax):
+    """添加dea曲线"""
     df = get_MACD(df)
     ax.plot(df["dea"], linewidth=1)
+
+
+def add_boll(df, ax):
+    """添加boll曲线"""
+    mid = df['close'].rolling(1).mean()
+    boll_up = mid + 2 * df['close'].rolling(1).std()
+    boll_down = mid - 2 * df['close'].rolling(1).std()
+    ax.plot(boll_up, linewidth=1)
+    ax.plot(boll_down, linewidth=1)
 
 
 def paint(csv_path, conf, idx, label):
     # 添加指标曲线对应的函数
     indicators = {"k": add_k, "volume": add_volume, "ma5": add_ma5, "macd": add_macd,
-                  "eam": add_ema, "diff": add_diff, "dea": add_dea}
+                  "eam": add_ema, "diff": add_diff, "dea": add_dea, "boll":add_boll,
+                  "kdj": add_kdj}
     df = pd.read_csv(csv_path)
     df.rename(columns={'Unnamed: 0': 'date'}, inplace=True)
     channel_num = conf["channel_num"]  # 一共几个子图
@@ -108,13 +124,13 @@ def paint(csv_path, conf, idx, label):
 
 def main():
     conf = json.load(open("conf/paint.json"))
-    # paint("data/csvfiles/1_000001.XSHE2010-11-24.csv", conf, 0, 0)  # for test
+    paint("data/csvfiles/1_000001.XSHE2010-11-24.csv", conf, 0, 0)  # for test
     csv_path = conf["csv_path"]
-    print("Start to paint...")
-    for idx, csv_name in enumerate(os.listdir(csv_path)):
-        label = int(csv_name.split("_")[0])
-        paint(os.path.join(csv_path, csv_name), conf, idx, label)
-    print("Painting done!")
+    # print("Start to paint...")
+    # for idx, csv_name in enumerate(os.listdir(csv_path)):
+    #     label = int(csv_name.split("_")[0])
+    #     paint(os.path.join(csv_path, csv_name), conf, idx, label)
+    # print("Painting done!")
 
 
 if __name__ == '__main__':
