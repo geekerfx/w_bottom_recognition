@@ -103,8 +103,7 @@ def add_boll(df, ax):
 def paint(csv_path, conf, idx, label):
     # 添加指标曲线对应的函数
     indicators = {"k": add_k, "volume": add_volume, "ma5": add_ma5, "macd": add_macd,
-                  "eam": add_ema, "diff": add_diff, "dea": add_dea, "boll":add_boll,
-                  "kdj": add_kdj}
+                  "eam": add_ema, "diff": add_diff, "dea": add_dea, "boll": add_boll}
     df = pd.read_csv(csv_path)
     df.rename(columns={'Unnamed: 0': 'date'}, inplace=True)
     channel_num = conf["channel_num"]  # 一共几个子图
