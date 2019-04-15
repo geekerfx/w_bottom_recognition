@@ -53,9 +53,22 @@ def add_k(df, ax):
     candlestick_ohlc(ax, quotes, colorup='r', colordown='g', width=0.5)
 
 
+def add_open(df, ax):
+    ax.plot(df["open"], linewidth=1)
+
+
+def add_close(df, ax):
+    """添加收盘价曲线"""
+    ax.plot(df["close"], linewidth=1)
+
+
 def add_volume(df, ax):
     """向图中添加成交量，采用柱状图"""
-    ax.bar([i for i in range(len(df))], df["volume"], color="b")
+    ax.bar([i for i in range(len(df))], df["volume"])
+
+def add_money(df, ax):
+    """添加成交额，使用柱状图"""
+    ax.bar([i for i in range(len(df))], df["money"])
 
 
 def add_ma5(df, ax):
@@ -102,8 +115,6 @@ def add_boll(df, ax):
 
 def paint(csv_path, conf, idx, label):
     # 添加指标曲线对应的函数
-    indicators = {"k": add_k, "volume": add_volume, "ma5": add_ma5, "macd": add_macd,
-                  "eam": add_ema, "diff": add_diff, "dea": add_dea, "boll": add_boll}
     df = pd.read_csv(csv_path)
     df.rename(columns={'Unnamed: 0': 'date'}, inplace=True)
     channel_num = conf["channel_num"]  # 一共几个子图
@@ -122,6 +133,7 @@ def paint(csv_path, conf, idx, label):
 
 
 def main():
+
     conf = json.load(open("conf/paint.json"))
     paint("data/csvfiles/1_000001.XSHE2010-11-24.csv", conf, 0, 0)  # for test
     csv_path = conf["csv_path"]
@@ -133,4 +145,9 @@ def main():
 
 
 if __name__ == '__main__':
+    # 绘制指标曲线的对应函数
+    indicators = {"k": add_k, "open": add_open, "close": add_close, "volume": add_volume,
+                  "money": add_money, "ma5": add_ma5, "macd": add_macd, "eam": add_ema,
+                  "diff": add_diff, "dea": add_dea, "boll": add_boll}
+
     main()
